@@ -7,6 +7,20 @@ CREATE TABLE users (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE roles (
+    role_id SERIAL NOT NULL PRIMARY KEY,
+    role_name VARCHAR(255),
+    description TEXT
+);
+
+CREATE TABLE user_role (
+    user_id INTEGER NOT NULL,
+    role_id INTEGER NOT NULL,
+    PRIMARY KEY (user_id, role_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (role_id) REFERENCES role(role_id)
+);
+
 CREATE TABLE manufacturers (
     manufacturer_id SERIAL NOT NULL PRIMARY KEY,
     m_name VARCHAR(255)
@@ -56,6 +70,7 @@ create table order_details (
 	foreign key (order_id) references orders(order_id),
 	foreign key (product_id) references products(product_id)
 );
+
 create table order_status (
 	status_id integer not null,
 	order_id integer not null,
@@ -63,14 +78,4 @@ create table order_status (
 	foreign key (status_id) references status(status_id),
 	foreign key (order_id) references orders(order_id)
 )
-
-
-
-
-
-
-
-
-
-
 
